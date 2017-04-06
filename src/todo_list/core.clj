@@ -4,7 +4,8 @@
 (defn -main
   "Web server."
   [port]
-  (fn [request] {:status 200
-                 :body "<p>Test app</p>"
-                 :headers {}})
-  {:port (Integer. port)})
+  (jetty/run-jetty
+    (fn [request] {:status 200
+                   :body "<p>Test app</p>"
+                   :headers {}})
+    {:port (Integer. port)}))
