@@ -2,7 +2,8 @@
   (:require [ring.adapter.jetty :as jetty]
     [ring.middleware.reload :refer [wrap-reload]]
     [compojure.core :refer [defroutes GET]]
-    [compojure.route :refer [not-found]]))
+    [compojure.route :refer [not-found]]
+    [ring.handler.dump :refer [handle-dump]]))
 
 (defn home
   "Application home page"
@@ -18,18 +19,12 @@
    :body "<h1>Contact info is comming soon...</h1>"
    :headers {}})
 
-(defn debug-info
-  "Display info only for debugging purposes"
-  [request]
-  {:status 200
-   :body (pr-str request)
-   :headers {}})
 
 ;;routes
 (defroutes app
   (GET "/" [] home)
   (GET "/contact" [] contact)
-  (GET "/debug-info" [] debug-info)
+  (GET "/debug-info" [] handle-dump)
   (not-found "<h2>404 - Resource not found!</h2>"))
 
 ;;main environment
