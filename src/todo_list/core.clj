@@ -27,6 +27,20 @@
    :body (str "Hello " name "! <br/> Welcome for todo list app.")
    :headers {}}))
 
+(defn bhaskara
+  "Bhaskara calculator page"
+  [request]
+  (let [a (Double. (get-in request [:route-params :a]))
+       b (Double. (get-in request [:route-params :b]))
+       c (Double. (get-in request [:route-params :c]))
+       delta (Double. (- (* b b) (* 4 a c)))
+       x1 (Double. (/ (+ (- b) (Math/sqrt delta)) (* 2 a)))
+       x2 (Double. (/ (- (- b) (Math/sqrt delta)) (* 2 a)))]
+  {:status 200
+   :body (str "delta = " delta " x1 = " x1 " x2 = " x2)
+   :headers {}
+  }))
+
 
 ;;routes
 (defroutes app
@@ -34,6 +48,7 @@
   (GET "/contact" [] contact)
   (GET "/debug-info" [] handle-dump)
   (GET "/say-hello/:name" [] say-hello)
+  (GET "/bhaskara/:a/:b/:c" [] bhaskara)
   (not-found "<h2>404 - Resource not found!</h2>"))
 
 ;;main environment
