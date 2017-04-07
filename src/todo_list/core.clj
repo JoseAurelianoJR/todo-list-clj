@@ -19,12 +19,21 @@
    :body "<h1>Contact info is comming soon...</h1>"
    :headers {}})
 
+(defn say-hello
+  "Say hello page"
+  [request]
+  (let [name (get-in request [:route-params :name])]
+  {:status 200
+   :body (str "Hello " name "! <br/> Welcome for todo list app.")
+   :headers {}}))
+
 
 ;;routes
 (defroutes app
   (GET "/" [] home)
   (GET "/contact" [] contact)
   (GET "/debug-info" [] handle-dump)
+  (GET "/say-hello/:name" [] say-hello)
   (not-found "<h2>404 - Resource not found!</h2>"))
 
 ;;main environment
